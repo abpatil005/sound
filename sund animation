@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple HTML Page with Sound Effects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header, footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .hidden {
+            display: none;
+        }
+        .content {
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        button.tick:after {
+            content: "✔";
+            display: block;
+            font-size: 20px;
+            animation: tickAnimation 0.5s forwards;
+        }
+        @keyframes tickAnimation {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Cow Sound Effect Page</h1>
+    </header>
+    
+    <div class="loader" id="loader">
+        <img src="C:\Users\marki\Downloads\Za9e.gif" alt="Loading...">
+    </div>
+
+    <div class="content hidden" id="content">
+        <p>Enjoy the moo sound effect when the page loads and when you submit the form!</p>
+        <form id="myForm">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+            <button type="submit" id="submitButton">Submit</button>
+        </form>
+    </div>
+
+    <audio id="myaudio">
+        <source src="C:\Users\marki\Downloads\mixkit-cow-dry-moo-1748.wav" type="audio/mp3">
+    </audio>
+
+    <footer>
+        <p>&copy; 2024 Cow Sound Effect Page</p>
+    </footer>
+
+    <script>
+        // Adjust audio volume
+        var audio = document.getElementById("myaudio");
+        audio.volume = 0.2;
+
+        // Show loader and hide content initially
+        var loader = document.getElementById("loader");
+        var content = document.getElementById("content");
+
+        window.onload = function() {
+            setTimeout(function() {
+                loader.classList.add('hidden');
+                content.classList.remove('hidden');
+                // Play sound on page load
+                audio.load();
+                audio.oncanplaythrough = function() {
+                    audio.play();
+                };
+            }, 2000); // Simulate loading time
+        };
+
+        // Play sound on form submission and animate button
+        var form = document.getElementById("myForm");
+        var submitButton = document.getElementById("submitButton");
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent actual form submission
+            audio.play(); // Play the sound effect
+            submitButton.classList.add('tick');
+            submitButton.disabled = true;
+            submitButton.innerHTML = ''; // Clear button text to show the tick animation
+        });
+    </script>
+</body>
+</html>
