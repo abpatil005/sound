@@ -58,6 +58,11 @@
             0% { opacity: 0; transform: scale(0.5); }
             100% { opacity: 1; transform: scale(1); }
         }
+        .thank-you {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
@@ -76,6 +81,7 @@
             <input type="text" id="name" name="name" required>
             <button type="submit" id="submitButton">Submit</button>
         </form>
+        <div id="thankYouMessage" class="hidden thank-you">Thank you for submitting the form!</div>
     </div>
 
     <audio id="myaudio">
@@ -96,44 +102,46 @@
         var content = document.getElementById("content");
 
         window.onload = function() {
-            document.addEventListener('scroll', audioOnload);
-  document.addEventListener('mousemove', audioOnload);
-  document.addEventListener('touchstart', audioOnload);
+            document.addEventListener('scroll', InitAudioOnload);
+            document.addEventListener('mousemove', InitAudioOnload);
+            document.addEventListener('touchstart', InitAudioOnload);
             
             setTimeout(function() {
-                audioOnload();
+                InitAudioOnload();
                 loader.classList.add('hidden');
                 content.classList.remove('hidden');
             }, 2000); // Simulate loading time
         };
-function InitAudioOnload(event) {
-    audioOnload();
-    event.currentTarget.removeEventListener(event.type, InitAudioOnload);
-  }
 
-        
-function audioOnload() {
-    if (window.audioDidLoad) {
-      return false;
-    }
-    window.audioDidLoad = true;
-                // Play sound on page load
-                audio.load();
-                audio.oncanplaythrough = function() {
-                    audio.play();
-                };
-}
-    
-        
+        function InitAudioOnload(event) {
+            audioOnload();
+            event.currentTarget.removeEventListener(event.type, InitAudioOnload);
+        }
+
+        function audioOnload() {
+            if (window.audioDidLoad) {
+                return false;
+            }
+            window.audioDidLoad = true;
+            // Play sound on page load
+            audio.load();
+            audio.oncanplaythrough = function() {
+                audio.play();
+            };
+        }
+
         // Play sound on form submission and animate button
         var form = document.getElementById("myForm");
         var submitButton = document.getElementById("submitButton");
+        var thankYouMessage = document.getElementById("thankYouMessage");
         form.addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent actual form submission
             audio.play(); // Play the sound effect
             submitButton.classList.add('tick');
             submitButton.disabled = true;
             submitButton.innerHTML = ''; // Clear button text to show the tick animation
+            form.style.display = 'none'; // Hide the form fields
+            thankYouMessage.classList.remove('hidden'); // Show thank you message
         });
     </script>
 </body>
