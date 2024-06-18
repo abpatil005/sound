@@ -108,7 +108,7 @@
         };
 function InitAudioOnload(event) {
     audioOnload();
-    event.currentTarget.removeEventListener(event.type, audioOnload);
+    event.currentTarget.removeEventListener(event.type, InitAudioOnload);
   }
 
         
