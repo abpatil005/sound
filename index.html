@@ -34,90 +34,84 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-        .nav-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
+        .loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
-        .nav-logo {
-            flex: 1;
-            text-align: left;
+        .hidden {
+            display: none;
         }
-        .nav-logo img {
-            max-width: 100px;
-            height: auto;
-        }
-        .nav-menu {
-            flex: 2;
+        .content {
             text-align: center;
+            margin-top: 20px;
         }
-        .nav-menu ul {
+        form {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        button.tick:after {
+            content: "✔";
+            display: block;
+            font-size: 20px;
+            animation: tickAnimation 0.5s forwards;
+        }
+        @keyframes tickAnimation {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        nav {
+            background-color: #333;
+            text-align: center;
+            padding: 10px 0;
+        }
+        nav ul {
             list-style-type: none;
-            padding: 0;
             margin: 0;
-            display: flex;
-            justify-content: center;
+            padding: 0;
         }
-        .nav-menu ul li {
-            margin: 0 10px;
+        nav ul li {
             display: inline;
+            margin: 0 10px;
         }
-        .nav-menu ul li a {
+        nav ul li a {
             color: white;
             text-decoration: none;
             font-size: 18px;
             transition: color 0.3s ease;
         }
-        .nav-menu ul li a:hover {
+        nav ul li a:hover {
             color: #45a049;
-        }
-        .hamburger-menu {
-            display: none;
-            cursor: pointer;
-            padding: 10px;
-        }
-        @media screen and (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            .hamburger-menu {
-                display: block;
-            }
-            .nav-menu.open {
-                display: block;
-                position: absolute;
-                top: 60px;
-                background-color: #333;
-                width: 100%;
-                text-align: center;
-                z-index: 999;
-            }
-            .nav-menu.open ul {
-                display: block;
-            }
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="nav-container">
-            <div class="nav-logo">
-                <img src="cow-icon.png" alt="Company Logo">
-            </div>
-            <div class="nav-menu">
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#blogs">Blogs</a></li>
-                    <li><a href="#contact">Contact Us</a></li>
-                </ul>
-            </div>
-            <div class="hamburger-menu" onclick="toggleMenu()">
-                ☰
-            </div>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#blogs">Blogs</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
         <div class="banner">
             <h1>Welcome to the Sound Effect Page</h1>
         </div>
@@ -188,12 +182,6 @@
             submitButton.disabled = true;
             submitButton.innerHTML = ''; // Clear button text to show the tick animation
         });
-
-        // Toggle mobile menu
-        function toggleMenu() {
-            var navMenu = document.querySelector('.nav-menu');
-            navMenu.classList.toggle('open');
-        }
     </script>
 </body>
 </html>
