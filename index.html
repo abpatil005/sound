@@ -78,7 +78,7 @@
     </header>
     
     <div class="loader" id="loader">
-        <img src="/sound/cow_loader.gif" alt="Loading...">
+        <img src="/sound/Za9e-ezgif.com-gif-to-avif-converter.avif" alt="Loading...">
     </div>
 
     <div class="content hidden" id="content">
@@ -103,6 +103,12 @@
         // Adjust audio volume
         var audio = document.getElementById("myaudio");
         audio.volume = 0.2;
+
+        // Play sound effect when page starts loading
+        audio.load();
+        audio.oncanplaythrough = function() {
+            audio.play();
+        };
 
         // Show loader and hide content initially
         var loader = document.getElementById("loader");
