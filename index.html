@@ -21,6 +21,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            z-index: 1000; /* Ensure loader is above other content */
         }
         .hidden {
             display: none;
@@ -71,7 +72,7 @@
     </header>
     
     <div class="loader" id="loader">
-        <img src="/sound/Za9e-ezgif.com-gif-to-avif-converter.avif" alt="Loading...">
+        <img src="/sound/cow_loader.gif" alt="Loading...">
     </div>
 
     <div class="content hidden" id="content">
@@ -101,33 +102,26 @@
         var loader = document.getElementById("loader");
         var content = document.getElementById("content");
 
-        window.onload = function() {
-            document.addEventListener('scroll', InitAudioOnload);
-            document.addEventListener('mousemove', InitAudioOnload);
-            document.addEventListener('touchstart', InitAudioOnload);
-            
-            setTimeout(function() {
-                InitAudioOnload();
-                loader.classList.add('hidden');
-                content.classList.remove('hidden');
-            }, 2000); // Simulate loading time
-        };
-
-        function InitAudioOnload(event) {
-            audioOnload();
-            event.currentTarget.removeEventListener(event.type, InitAudioOnload);
+        // Function to hide loader and show content after initial load
+        function showContent() {
+            loader.classList.add('hidden');
+            content.classList.remove('hidden');
         }
 
-        function audioOnload() {
-            if (window.audioDidLoad) {
-                return false;
+        window.onload = function() {
+            setTimeout(showContent, 2000); // Simulate loading time
+            initAudioOnload();
+        };
+
+        // Ensure audio plays only once
+        function initAudioOnload() {
+            if (!window.audioLoaded) {
+                window.audioLoaded = true;
+                audio.load();
+                audio.oncanplaythrough = function() {
+                    audio.play();
+                };
             }
-            window.audioDidLoad = true;
-            // Play sound on page load
-            audio.load();
-            audio.oncanplaythrough = function() {
-                audio.play();
-            };
         }
 
         // Play sound on form submission and animate button
