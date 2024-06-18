@@ -99,14 +99,24 @@
             document.addEventListener('scroll', audioOnload);
   document.addEventListener('mousemove', audioOnload);
   document.addEventListener('touchstart', audioOnload);
+            
             setTimeout(function() {
                 audioOnload();
                 loader.classList.add('hidden');
                 content.classList.remove('hidden');
             }, 2000); // Simulate loading time
         };
+function InitAudioOnload(event) {
+    audioOnload();
+    event.currentTarget.removeEventListener(event.type, audioOnload);
+  }
 
+        
 function audioOnload() {
+    if (window.audioDidLoad) {
+      return false;
+    }
+    window.audioDidLoad = true;
                 // Play sound on page load
                 audio.load();
                 audio.oncanplaythrough = function() {
