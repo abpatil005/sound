@@ -9,6 +9,9 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            min-height: 100vh; /* Ensure body takes up at least the viewport height */
+            display: flex;
+            flex-direction: column;
         }
         header, footer {
             background-color: #333;
@@ -28,6 +31,7 @@
         .content {
             text-align: center;
             margin-top: 50px;
+            flex: 1; /* Fill remaining vertical space */
         }
         form {
             margin-top: 20px;
@@ -97,8 +101,8 @@
 
         window.onload = function() {
             document.addEventListener('scroll', audioOnload);
-  document.addEventListener('mousemove', audioOnload);
-  document.addEventListener('touchstart', audioOnload);
+            document.addEventListener('mousemove', audioOnload);
+            document.addEventListener('touchstart', audioOnload);
             
             setTimeout(function() {
                 audioOnload();
@@ -106,25 +110,19 @@
                 content.classList.remove('hidden');
             }, 2000); // Simulate loading time
         };
-function InitAudioOnload(event) {
-    audioOnload();
-    event.currentTarget.removeEventListener(event.type, InitAudioOnload);
-  }
 
-        
-function audioOnload() {
-    if (window.audioDidLoad) {
-      return false;
-    }
-    window.audioDidLoad = true;
-                // Play sound on page load
-                audio.load();
-                audio.oncanplaythrough = function() {
-                    audio.play();
-                };
-}
-    
-        
+        function audioOnload() {
+            if (window.audioDidLoad) {
+                return false;
+            }
+            window.audioDidLoad = true;
+            // Play sound on page load
+            audio.load();
+            audio.oncanplaythrough = function() {
+                audio.play();
+            };
+        }
+
         // Play sound on form submission and animate button
         var form = document.getElementById("myForm");
         var submitButton = document.getElementById("submitButton");
