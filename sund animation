@@ -66,7 +66,7 @@
     </header>
     
     <div class="loader" id="loader">
-        <img src="C:\Users\marki\Downloads\Za9e.gif" alt="Loading...">
+        <img src="/Za9e-ezgif.com-gif-to-avif-converter.avif" alt="Loading...">
     </div>
 
     <div class="content hidden" id="content">
@@ -79,7 +79,7 @@
     </div>
 
     <audio id="myaudio">
-        <source src="C:\Users\marki\Downloads\mixkit-cow-dry-moo-1748.wav" type="audio/mp3">
+        <source src="/mixkit-cow-dry-moo-1748.wav" type="audio/mp3">
     </audio>
 
     <footer>
