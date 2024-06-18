@@ -21,7 +21,6 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 1000; /* Ensure loader is above other content */
         }
         .hidden {
             display: none;
@@ -59,17 +58,6 @@
             0% { opacity: 0; transform: scale(0.5); }
             100% { opacity: 1; transform: scale(1); }
         }
-        .thank-you {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #4CAF50;
-            animation: fadeIn 0.5s forwards;
-            opacity: 0;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
     </style>
 </head>
 <body>
@@ -88,7 +76,6 @@
             <input type="text" id="name" name="name" required>
             <button type="submit" id="submitButton">Submit</button>
         </form>
-        <div id="thankYouMessage" class="hidden thank-you">Thank you for submitting the form!</div>
     </div>
 
     <audio id="myaudio">
@@ -104,50 +91,49 @@
         var audio = document.getElementById("myaudio");
         audio.volume = 0.2;
 
-        // Play sound effect when page starts loading
-        audio.load();
-        audio.oncanplaythrough = function() {
-            audio.play();
-        };
-
         // Show loader and hide content initially
         var loader = document.getElementById("loader");
         var content = document.getElementById("content");
 
-        // Function to hide loader and show content after initial load
-        function showContent() {
-            loader.classList.add('hidden');
-            content.classList.remove('hidden');
-        }
-
         window.onload = function() {
-            setTimeout(showContent, 2000); // Simulate loading time
-            initAudioOnload();
+            document.addEventListener('scroll', audioOnload);
+  document.addEventListener('mousemove', audioOnload);
+  document.addEventListener('touchstart', audioOnload);
+            
+            setTimeout(function() {
+                audioOnload();
+                loader.classList.add('hidden');
+                content.classList.remove('hidden');
+            }, 2000); // Simulate loading time
         };
+function InitAudioOnload(event) {
+    audioOnload();
+    event.currentTarget.removeEventListener(event.type, InitAudioOnload);
+  }
 
-        // Ensure audio plays only once
-        function initAudioOnload() {
-            if (!window.audioLoaded) {
-                window.audioLoaded = true;
+        
+function audioOnload() {
+    if (window.audioDidLoad) {
+      return false;
+    }
+    window.audioDidLoad = true;
+                // Play sound on page load
                 audio.load();
                 audio.oncanplaythrough = function() {
                     audio.play();
                 };
-            }
-        }
-
+}
+    
+        
         // Play sound on form submission and animate button
         var form = document.getElementById("myForm");
         var submitButton = document.getElementById("submitButton");
-        var thankYouMessage = document.getElementById("thankYouMessage");
         form.addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent actual form submission
             audio.play(); // Play the sound effect
             submitButton.classList.add('tick');
             submitButton.disabled = true;
             submitButton.innerHTML = ''; // Clear button text to show the tick animation
-            form.style.display = 'none'; // Hide the form fields
-            thankYouMessage.classList.remove('hidden'); // Show thank you message
         });
     </script>
 </body>
