@@ -27,7 +27,7 @@
         }
         .content {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 20px;
         }
         form {
             margin-top: 20px;
@@ -58,12 +58,45 @@
             0% { opacity: 0; transform: scale(0.5); }
             100% { opacity: 1; transform: scale(1); }
         }
+        nav {
+            background-color: #333;
+            text-align: center;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #45a049;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to the Cow Sound Effect Page</h1>
+        <h1>Welcome to the <span style="font-size: 2em;">🐄</span> Sound Effect Page</h1>
     </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#blogs">Blogs</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
     
     <div class="loader" id="loader">
         <img src="/sound/Za9e-ezgif.com-gif-to-avif-converter.avif" alt="Loading...">
@@ -97,8 +130,8 @@
 
         window.onload = function() {
             document.addEventListener('scroll', audioOnload);
-  document.addEventListener('mousemove', audioOnload);
-  document.addEventListener('touchstart', audioOnload);
+            document.addEventListener('mousemove', audioOnload);
+            document.addEventListener('touchstart', audioOnload);
             
             setTimeout(function() {
                 audioOnload();
@@ -106,25 +139,19 @@
                 content.classList.remove('hidden');
             }, 2000); // Simulate loading time
         };
-function InitAudioOnload(event) {
-    audioOnload();
-    event.currentTarget.removeEventListener(event.type, InitAudioOnload);
-  }
 
-        
-function audioOnload() {
-    if (window.audioDidLoad) {
-      return false;
-    }
-    window.audioDidLoad = true;
-                // Play sound on page load
-                audio.load();
-                audio.oncanplaythrough = function() {
-                    audio.play();
-                };
-}
-    
-        
+        function audioOnload() {
+            if (window.audioDidLoad) {
+                return false;
+            }
+            window.audioDidLoad = true;
+            // Play sound on page load
+            audio.load();
+            audio.oncanplaythrough = function() {
+                audio.play();
+            };
+        }
+
         // Play sound on form submission and animate button
         var form = document.getElementById("myForm");
         var submitButton = document.getElementById("submitButton");
